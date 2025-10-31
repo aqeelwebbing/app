@@ -1,2 +1,0 @@
-- change name to Talk-To-My-Lawyer
-- No mention of AI in the page content or site copy
