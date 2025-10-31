@@ -36,7 +36,8 @@
       "Bash(supabase db push:*)",
       "Bash(git push:*)",
       "Bash(vercel:*)",
-      "Bash(supabase db pull:*)"
+      "Bash(supabase db pull:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

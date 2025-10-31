@@ -259,24 +259,67 @@ export default function Home() {
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {/* Hero Section */}
-        <section className="flex min-h-screen w-screen shrink-0 flex-col justify-end px-6 pb-16 pt-24 md:px-12 md:pb-24">
-          <div className="max-w-3xl">
-            <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
+        <section className="relative flex min-h-screen w-screen shrink-0 flex-col justify-center px-6 pb-16 pt-24 md:px-12 md:pb-24">
+          {/* Floating Elements */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute left-[10%] top-[20%] h-32 w-32 animate-[float_6s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-blue-500/10 to-transparent blur-xl" />
+            <div className="absolute right-[15%] top-[40%] h-40 w-40 animate-[float_8s_ease-in-out_infinite_2s] rounded-full bg-gradient-to-br from-orange-500/10 to-transparent blur-xl" />
+            <div className="absolute bottom-[30%] left-[20%] h-24 w-24 animate-[float_7s_ease-in-out_infinite_1s] rounded-full bg-gradient-to-br from-blue-400/10 to-transparent blur-xl" />
+          </div>
+
+          <div className="relative max-w-4xl">
+            <div className="mb-6 inline-flex animate-in fade-in slide-in-from-bottom-4 items-center gap-2 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-2 backdrop-blur-md duration-700">
+              <div className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground/60 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-foreground/80" />
+              </div>
               <p className="font-mono text-xs text-foreground/90">Professional Legal Documents</p>
             </div>
-            <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-6xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-7xl lg:text-8xl">
+
+            <h1 className="group mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-6xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-7xl lg:text-8xl">
+              <span className="inline-block transition-transform duration-500 group-hover:scale-105">
+                Generate Legal
+              </span>
+              <br />
               <span className="text-balance">
-                Generate Legal Letters
-                <br />
-                with Confidence
+                <span className="relative inline-block">
+                  <span className="relative z-10">Letters</span>
+                  <span className="absolute -bottom-2 left-0 h-3 w-full animate-[morphWidth_3s_ease-in-out_infinite] bg-gradient-to-r from-blue-500/20 to-orange-500/20 blur-sm" />
+                </span>
+                {" "}with{" "}
+                <span className="inline-block bg-gradient-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent transition-all duration-500 hover:scale-105">
+                  Confidence
+                </span>
               </span>
             </h1>
-            <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-lg leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-xl">
-              <span className="text-pretty">
-                Professional legal documents in minutes. Save time, reduce costs, and ensure accuracy.
-              </span>
+
+            <p className="mb-8 max-w-2xl animate-in fade-in slide-in-from-bottom-4 text-lg leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-xl">
+              Professional legal documents in minutes. Save time, reduce costs, and ensure accuracy with our streamlined platform.
             </p>
-            <div className="flex animate-in fade-in slide-in-from-bottom-4 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
+
+            {/* Key Benefits */}
+            <div className="mb-8 grid animate-in fade-in slide-in-from-bottom-4 grid-cols-1 gap-3 duration-1000 delay-300 sm:grid-cols-3">
+              {[
+                { icon: "⚡", text: "Instant Generation" },
+                { icon: "✓", text: "Legally Accurate" },
+                { icon: "💰", text: "Cost Effective" },
+              ].map((benefit, idx) => (
+                <div
+                  key={idx}
+                  className="group relative overflow-hidden rounded-lg border border-foreground/10 bg-foreground/5 p-3 backdrop-blur-sm transition-all duration-300 hover:border-foreground/20 hover:bg-foreground/10 hover:scale-105"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl transition-transform duration-300 group-hover:scale-110">
+                      {benefit.icon}
+                    </span>
+                    <span className="text-sm font-medium text-foreground/90">{benefit.text}</span>
+                  </div>
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-foreground/5 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex animate-in fade-in slide-in-from-bottom-4 flex-col gap-4 duration-1000 delay-400 sm:flex-row sm:items-center">
               <MagneticButton size="lg" variant="primary" onClick={() => router.push("/auth")}>
                 Start Creating Letters
               </MagneticButton>
@@ -287,7 +330,7 @@ export default function Home() {
           </div>
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-in fade-in duration-1000 delay-500">
-            <div className="flex items-center gap-2">
+            <div className="group flex cursor-pointer items-center gap-2 transition-transform hover:scale-105">
               <p className="font-mono text-xs text-foreground/80">Scroll to explore</p>
               <div className="flex h-6 w-12 items-center justify-center rounded-full border border-foreground/20 bg-foreground/15 backdrop-blur-md">
                 <div className="h-2 w-2 animate-pulse rounded-full bg-foreground/80" />
@@ -305,6 +348,50 @@ export default function Home() {
       <style jsx global>{`
         div::-webkit-scrollbar {
           display: none;
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+          }
+          25% {
+            transform: translateY(-20px) translateX(10px);
+          }
+          50% {
+            transform: translateY(-10px) translateX(-10px);
+          }
+          75% {
+            transform: translateY(-30px) translateX(5px);
+          }
+        }
+
+        @keyframes morphWidth {
+          0%, 100% {
+            width: 100%;
+            opacity: 0.3;
+          }
+          50% {
+            width: 80%;
+            opacity: 0.5;
+          }
+        }
+
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+          }
+          100% {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.4;
+          }
+          50% {
+            opacity: 0.8;
+          }
         }
       `}</style>
     </main>
