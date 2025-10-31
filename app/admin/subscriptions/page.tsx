@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { Database, Subscription, UserRoleRow } from "@/lib/types/database";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export default function AdminSubscriptionsPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);

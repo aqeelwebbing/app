@@ -2,6 +2,9 @@ import { requireAdmin, getUserProfile } from "@/lib/auth";
 import { getServerSupabase } from "@/lib/supabase/server";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export default async function AdminDashboard() {
   await requireAdmin();
   const profile = await getUserProfile();

@@ -1,6 +1,9 @@
 import { redirect } from "next/navigation";
 import { getUserRole } from "@/lib/auth";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export default async function Dashboard() {
   const role = await getUserRole();
 

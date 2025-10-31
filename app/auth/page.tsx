@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabase/client";
 import type { UserRoleRow } from "@/lib/types/database";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export default function AuthPage() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");

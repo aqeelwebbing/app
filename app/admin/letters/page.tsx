@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { Letter } from "@/lib/types/database";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export default function AdminLettersPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);

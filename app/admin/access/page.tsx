@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 import type { Database } from "@/lib/types/database";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export default function AdminAccess() {
   const [secretKey, setSecretKey] = useState("");
   const [email, setEmail] = useState("");
