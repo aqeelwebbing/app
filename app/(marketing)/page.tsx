@@ -1,399 +1,252 @@
 "use client"
 
-import { Shader, ChromaFlow, Swirl } from "shaders/react"
-import { CustomCursor } from "@/components/custom-cursor"
-import { GrainOverlay } from "@/components/grain-overlay"
-import { WorkSection } from "@/components/sections/work-section"
-import { ServicesSection } from "@/components/sections/services-section"
-import { AboutSection } from "@/components/sections/about-section"
-import { ContactSection } from "@/components/sections/contact-section"
-import { MagneticButton } from "@/components/magnetic-button"
-import { useRef, useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 export default function Home() {
   const router = useRouter()
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const [currentSection, setCurrentSection] = useState(0)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const touchStartY = useRef(0)
-  const touchStartX = useRef(0)
-  const shaderContainerRef = useRef<HTMLDivElement>(null)
-  const scrollThrottleRef = useRef<number | undefined>(undefined)
-
-  useEffect(() => {
-    const checkShaderReady = () => {
-      if (shaderContainerRef.current) {
-        const canvas = shaderContainerRef.current.querySelector("canvas")
-        if (canvas && canvas.width > 0 && canvas.height > 0) {
-          setIsLoaded(true)
-          return true
-        }
-      }
-      return false
-    }
-
-    if (checkShaderReady()) return
-
-    const intervalId = setInterval(() => {
-      if (checkShaderReady()) {
-        clearInterval(intervalId)
-      }
-    }, 100)
-
-    const fallbackTimer = setTimeout(() => {
-      setIsLoaded(true)
-    }, 1500)
-
-    return () => {
-      clearInterval(intervalId)
-      clearTimeout(fallbackTimer)
-    }
-  }, [])
-
-  const scrollToSection = (index: number) => {
-    if (scrollContainerRef.current) {
-      const sectionWidth = scrollContainerRef.current.offsetWidth
-      scrollContainerRef.current.scrollTo({
-        left: sectionWidth * index,
-        behavior: "smooth",
-      })
-      setCurrentSection(index)
-    }
-  }
-
-  useEffect(() => {
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY
-      touchStartX.current = e.touches[0].clientX
-    }
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (Math.abs(e.touches[0].clientY - touchStartY.current) > 10) {
-        e.preventDefault()
-      }
-    }
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      const touchEndY = e.changedTouches[0].clientY
-      const touchEndX = e.changedTouches[0].clientX
-      const deltaY = touchStartY.current - touchEndY
-      const deltaX = touchStartX.current - touchEndX
-
-      if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
-        if (deltaY > 0 && currentSection < 4) {
-          scrollToSection(currentSection + 1)
-        } else if (deltaY < 0 && currentSection > 0) {
-          scrollToSection(currentSection - 1)
-        }
-      }
-    }
-
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener("touchstart", handleTouchStart, { passive: true })
-      container.addEventListener("touchmove", handleTouchMove, { passive: false })
-      container.addEventListener("touchend", handleTouchEnd, { passive: true })
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("touchstart", handleTouchStart)
-        container.removeEventListener("touchmove", handleTouchMove)
-        container.removeEventListener("touchend", handleTouchEnd)
-      }
-    }
-  }, [currentSection])
-
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault()
-
-        if (!scrollContainerRef.current) return
-
-        scrollContainerRef.current.scrollBy({
-          left: e.deltaY,
-          behavior: "instant",
-        })
-
-        const sectionWidth = scrollContainerRef.current.offsetWidth
-        const newSection = Math.round(scrollContainerRef.current.scrollLeft / sectionWidth)
-        if (newSection !== currentSection) {
-          setCurrentSection(newSection)
-        }
-      }
-    }
-
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener("wheel", handleWheel, { passive: false })
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("wheel", handleWheel)
-      }
-    }
-  }, [currentSection])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollThrottleRef.current) return
-
-      scrollThrottleRef.current = requestAnimationFrame(() => {
-        if (!scrollContainerRef.current) {
-          scrollThrottleRef.current = undefined
-          return
-        }
-
-        const sectionWidth = scrollContainerRef.current.offsetWidth
-        const scrollLeft = scrollContainerRef.current.scrollLeft
-        const newSection = Math.round(scrollLeft / sectionWidth)
-
-        if (newSection !== currentSection && newSection >= 0 && newSection <= 4) {
-          setCurrentSection(newSection)
-        }
-
-        scrollThrottleRef.current = undefined
-      })
-    }
-
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener("scroll", handleScroll, { passive: true })
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("scroll", handleScroll)
-      }
-      if (scrollThrottleRef.current) {
-        cancelAnimationFrame(scrollThrottleRef.current)
-      }
-    }
-  }, [currentSection])
 
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-background">
-      <CustomCursor />
-      <GrainOverlay />
-
-      <div
-        ref={shaderContainerRef}
-        className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
-        style={{ contain: "strict" }}
-      >
-        <Shader className="h-full w-full">
-          <Swirl
-            colorA="#1275d8"
-            colorB="#e19136"
-            speed={0.8}
-            detail={0.8}
-            blend={50}
-            coarseX={40}
-            coarseY={40}
-            mediumX={40}
-            mediumY={40}
-            fineX={40}
-            fineY={40}
-          />
-          <ChromaFlow
-            baseColor="#0066ff"
-            upColor="#0066ff"
-            downColor="#d1d1d1"
-            leftColor="#e19136"
-            rightColor="#e19136"
-            intensity={0.9}
-            radius={1.8}
-            momentum={25}
-            maskType="alpha"
-            opacity={0.97}
-          />
-        </Shader>
-        <div className="absolute inset-0 bg-black/20" />
-      </div>
-
-      <nav
-        className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-6 transition-opacity duration-700 md:px-12 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <button
-          onClick={() => scrollToSection(0)}
-          className="transition-transform hover:scale-105"
-        >
-          <span className="font-sans text-xl font-semibold tracking-tight text-foreground">Talk-To-My-Lawyer</span>
-        </button>
-
-        <div className="hidden items-center gap-8 md:flex">
-          {["Home", "How It Works", "Features", "Why Choose Us", "Get Started"].map((item, index) => (
-            <button
-              key={item}
-              onClick={() => scrollToSection(index)}
-              className={`group relative font-sans text-sm font-medium transition-colors ${
-                currentSection === index ? "text-foreground" : "text-foreground/80 hover:text-foreground"
-              }`}
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Navigation */}
+      <nav className="border-b bg-white/80 backdrop-blur-sm fixed w-full top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">⚖️</span>
+            <span className="text-xl font-bold text-slate-900">Talk-To-My-Lawyer</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/auth"
+              className="px-6 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
             >
-              {item}
-              <span
-                className={`absolute -bottom-1 left-0 h-px bg-foreground transition-all duration-300 ${
-                  currentSection === index ? "w-full" : "w-0 group-hover:w-full"
-                }`}
-              />
-            </button>
-          ))}
+              Sign In
+            </Link>
+            <Link
+              href="/auth"
+              className="px-6 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
-
-        <MagneticButton variant="secondary" onClick={() => router.push("/auth")}>
-          Sign In
-        </MagneticButton>
       </nav>
 
-      <div
-        ref={scrollContainerRef}
-        data-scroll-container
-        className={`relative z-10 flex h-screen overflow-x-auto overflow-y-hidden transition-opacity duration-700 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {/* Hero Section */}
-        <section className="relative flex min-h-screen w-screen shrink-0 flex-col justify-center px-6 pb-16 pt-24 md:px-12 md:pb-24">
-          {/* Floating Elements */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute left-[10%] top-[20%] h-32 w-32 animate-[float_6s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-blue-500/10 to-transparent blur-xl" />
-            <div className="absolute right-[15%] top-[40%] h-40 w-40 animate-[float_8s_ease-in-out_infinite_2s] rounded-full bg-gradient-to-br from-orange-500/10 to-transparent blur-xl" />
-            <div className="absolute bottom-[30%] left-[20%] h-24 w-24 animate-[float_7s_ease-in-out_infinite_1s] rounded-full bg-gradient-to-br from-blue-400/10 to-transparent blur-xl" />
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+            <span className="text-sm font-medium text-blue-700">Professional Legal Documents</span>
           </div>
 
-          <div className="relative max-w-4xl">
-            <div className="mb-6 inline-flex animate-in fade-in slide-in-from-bottom-4 items-center gap-2 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-2 backdrop-blur-md duration-700">
-              <div className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground/60 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-foreground/80" />
+          <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight">
+            Generate Legal Letters
+            <br />
+            <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              with Confidence
+            </span>
+          </h1>
+
+          <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+            Professional legal documents in minutes. Save time, reduce costs, and ensure accuracy with our streamlined platform.
+          </p>
+
+          {/* Key Benefits */}
+          <div className="flex flex-wrap justify-center gap-4 mb-10">
+            {[
+              { icon: "⚡", text: "Instant Generation" },
+              { icon: "✓", text: "Legally Accurate" },
+              { icon: "💰", text: "Cost Effective" },
+            ].map((benefit, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg shadow-sm"
+              >
+                <span className="text-2xl">{benefit.icon}</span>
+                <span className="text-sm font-medium text-slate-700">{benefit.text}</span>
               </div>
-              <p className="font-mono text-xs text-foreground/90">Professional Legal Documents</p>
-            </div>
+            ))}
+          </div>
 
-            <h1 className="group mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-6xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-7xl lg:text-8xl">
-              <span className="inline-block transition-transform duration-500 group-hover:scale-105">
-                Generate Legal
-              </span>
-              <br />
-              <span className="text-balance">
-                <span className="relative inline-block">
-                  <span className="relative z-10">Letters</span>
-                  <span className="absolute -bottom-2 left-0 h-3 w-full animate-[morphWidth_3s_ease-in-out_infinite] bg-gradient-to-r from-blue-500/20 to-orange-500/20 blur-sm" />
-                </span>
-                {" "}with{" "}
-                <span className="inline-block bg-gradient-to-r from-blue-500 to-orange-500 bg-clip-text text-transparent transition-all duration-500 hover:scale-105">
-                  Confidence
-                </span>
-              </span>
-            </h1>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => router.push("/auth")}
+              className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
+            >
+              Start Creating Letters
+            </button>
+            <button
+              onClick={() => router.push("/auth")}
+              className="px-8 py-4 bg-white text-slate-700 font-semibold rounded-lg border border-slate-300 hover:border-slate-400 transition-all"
+            >
+              Already have an account?
+            </button>
+          </div>
+        </div>
+      </section>
 
-            <p className="mb-8 max-w-2xl animate-in fade-in slide-in-from-bottom-4 text-lg leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-xl">
-              Professional legal documents in minutes. Save time, reduce costs, and ensure accuracy with our streamlined platform.
-            </p>
+      {/* How It Works Section */}
+      <section className="py-20 px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">How It Works</h2>
+            <p className="text-lg text-slate-600">Three simple steps to get your legal document</p>
+          </div>
 
-            {/* Key Benefits */}
-            <div className="mb-8 grid animate-in fade-in slide-in-from-bottom-4 grid-cols-1 gap-3 duration-1000 delay-300 sm:grid-cols-3">
-              {[
-                { icon: "⚡", text: "Instant Generation" },
-                { icon: "✓", text: "Legally Accurate" },
-                { icon: "💰", text: "Cost Effective" },
-              ].map((benefit, idx) => (
-                <div
-                  key={idx}
-                  className="group relative overflow-hidden rounded-lg border border-foreground/10 bg-foreground/5 p-3 backdrop-blur-sm transition-all duration-300 hover:border-foreground/20 hover:bg-foreground/10 hover:scale-105"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl transition-transform duration-300 group-hover:scale-110">
-                      {benefit.icon}
-                    </span>
-                    <span className="text-sm font-medium text-foreground/90">{benefit.text}</span>
-                  </div>
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-foreground/5 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                step: "1",
+                icon: "📄",
+                title: "Choose Your Letter Type",
+                description: "Select from demand letters, notices, or responses based on your needs",
+              },
+              {
+                step: "2",
+                icon: "✍️",
+                title: "Fill in the Details",
+                description: "Our smart form guides you through the required information with helpful tips",
+              },
+              {
+                step: "3",
+                icon: "✓",
+                title: "Review & Download",
+                description: "Get your professionally formatted legal document ready to send in minutes",
+              },
+            ].map((item) => (
+              <div key={item.step} className="relative bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  {item.step}
                 </div>
-              ))}
-            </div>
-
-            <div className="flex animate-in fade-in slide-in-from-bottom-4 flex-col gap-4 duration-1000 delay-400 sm:flex-row sm:items-center">
-              <MagneticButton size="lg" variant="primary" onClick={() => router.push("/auth")}>
-                Start Creating Letters
-              </MagneticButton>
-              <MagneticButton size="lg" variant="secondary" onClick={() => router.push("/auth")}>
-                Already have an account?
-              </MagneticButton>
-            </div>
-          </div>
-
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-in fade-in duration-1000 delay-500">
-            <div className="group flex cursor-pointer items-center gap-2 transition-transform hover:scale-105">
-              <p className="font-mono text-xs text-foreground/80">Scroll to explore</p>
-              <div className="flex h-6 w-12 items-center justify-center rounded-full border border-foreground/20 bg-foreground/15 backdrop-blur-md">
-                <div className="h-2 w-2 animate-pulse rounded-full bg-foreground/80" />
+                <div className="text-5xl mb-4">{item.icon}</div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-slate-600">{item.description}</p>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <WorkSection />
-        <ServicesSection />
-        <AboutSection scrollToSection={scrollToSection} />
-        <ContactSection />
-      </div>
+      {/* Services Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Our Services</h2>
+            <p className="text-lg text-slate-600">Professional legal documents for every situation</p>
+          </div>
 
-      <style jsx global>{`
-        div::-webkit-scrollbar {
-          display: none;
-        }
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "⚖️",
+                title: "Demand Letters",
+                features: ["Custom templates", "Legal formatting", "Instant generation"],
+              },
+              {
+                icon: "📋",
+                title: "Notice Letters",
+                features: ["Multiple formats", "Compliance checking", "Professional tone"],
+              },
+              {
+                icon: "✉️",
+                title: "Response Letters",
+                features: ["Strategic language", "Time-sensitive handling", "Legally sound content"],
+              },
+            ].map((service, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-8 rounded-2xl border-2 border-slate-200 hover:border-blue-400 transition-all hover:shadow-lg"
+              >
+                <div className="text-5xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">{service.title}</h3>
+                <ul className="space-y-2">
+                  {service.features.map((feature, featureIdx) => (
+                    <li key={featureIdx} className="flex items-center gap-2 text-slate-600">
+                      <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) translateX(0px);
-          }
-          25% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          50% {
-            transform: translateY(-10px) translateX(-10px);
-          }
-          75% {
-            transform: translateY(-30px) translateX(5px);
-          }
-        }
+      {/* Social Proof Section */}
+      <section className="py-20 px-6 bg-gradient-to-r from-blue-600 to-blue-700">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-white mb-12">Trusted by thousands of clients</h2>
 
-        @keyframes morphWidth {
-          0%, 100% {
-            width: 100%;
-            opacity: 0.3;
-          }
-          50% {
-            width: 80%;
-            opacity: 0.5;
-          }
-        }
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { value: "10K+", label: "Documents Generated" },
+              { value: "95%", label: "Customer Satisfaction" },
+              { value: "24/7", label: "Available Anytime" },
+            ].map((stat, idx) => (
+              <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                <div className="text-5xl font-bold text-white mb-2">{stat.value}</div>
+                <div className="text-xl text-blue-100">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%) translateY(-100%) rotate(45deg);
-          }
-          100% {
-            transform: translateX(100%) translateY(100%) rotate(45deg);
-          }
-        }
+      {/* CTA Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+            Ready to Create Your Legal Letter?
+          </h2>
+          <p className="text-xl text-slate-600 mb-8">
+            Join thousands of users who trust Talk-To-My-Lawyer for their legal document needs.
+          </p>
 
-        @keyframes pulse-slow {
-          0%, 100% {
-            opacity: 0.4;
-          }
-          50% {
-            opacity: 0.8;
-          }
-        }
-      `}</style>
+          <div className="flex flex-wrap justify-center gap-4 mb-10">
+            {[
+              { icon: "🔒", text: "Secure & Private" },
+              { icon: "⚡", text: "Instant Delivery" },
+              { icon: "✓", text: "Legally Compliant" },
+            ].map((feature, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-lg"
+              >
+                <span className="text-xl">{feature.icon}</span>
+                <span className="text-sm font-medium text-slate-700">{feature.text}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => router.push("/auth")}
+              className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
+            >
+              Get Started Now
+            </button>
+            <button
+              onClick={() => router.push("/auth")}
+              className="px-8 py-4 bg-white text-slate-700 font-semibold rounded-lg border border-slate-300 hover:border-slate-400 transition-all"
+            >
+              Already have an account?
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-white py-8 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-slate-400">
+            © 2025 Talk-To-My-Lawyer. Professional legal document generation
+          </p>
+        </div>
+      </footer>
     </main>
   )
 }
