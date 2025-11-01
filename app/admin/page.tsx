@@ -37,7 +37,10 @@ export default async function AdminDashboard() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Users Management Card */}
-        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow">
+        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow relative opacity-60">
+          <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-semibold">
+            Coming Soon
+          </div>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,12 +50,9 @@ export default async function AdminDashboard() {
             <div className="font-semibold text-lg">Users</div>
           </div>
           <p className="text-sm text-slate-600 mb-4">Manage all users and roles</p>
-          <Link
-            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-            href="/admin/users"
-          >
+          <span className="text-sm text-gray-400 font-medium cursor-not-allowed">
             Manage Users →
-          </Link>
+          </span>
         </div>
 
         {/* Letters Management Card */}
@@ -94,7 +94,10 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Coupons Card */}
-        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow">
+        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow relative opacity-60">
+          <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-semibold">
+            Coming Soon
+          </div>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,16 +107,16 @@ export default async function AdminDashboard() {
             <div className="font-semibold text-lg">Coupons</div>
           </div>
           <p className="text-sm text-slate-600 mb-4">Create and manage coupons</p>
-          <Link
-            className="text-sm text-yellow-600 hover:text-yellow-700 font-medium"
-            href="/admin/coupons"
-          >
+          <span className="text-sm text-gray-400 font-medium cursor-not-allowed">
             Manage Coupons →
-          </Link>
+          </span>
         </div>
 
         {/* Affiliate Transactions Card */}
-        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow">
+        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow relative opacity-60">
+          <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-semibold">
+            Coming Soon
+          </div>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,16 +126,16 @@ export default async function AdminDashboard() {
             <div className="font-semibold text-lg">Affiliates</div>
           </div>
           <p className="text-sm text-slate-600 mb-4">View affiliate transactions</p>
-          <Link
-            className="text-sm text-orange-600 hover:text-orange-700 font-medium"
-            href="/admin/affiliates"
-          >
+          <span className="text-sm text-gray-400 font-medium cursor-not-allowed">
             View Transactions →
-          </Link>
+          </span>
         </div>
 
         {/* System Settings Card */}
-        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow">
+        <div className="border rounded-lg p-6 hover:shadow-md transition-shadow relative opacity-60">
+          <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-semibold">
+            Coming Soon
+          </div>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,12 +146,9 @@ export default async function AdminDashboard() {
             <div className="font-semibold text-lg">Settings</div>
           </div>
           <p className="text-sm text-slate-600 mb-4">Configure system settings</p>
-          <Link
-            className="text-sm text-red-600 hover:text-red-700 font-medium"
-            href="/admin/settings"
-          >
+          <span className="text-sm text-gray-400 font-medium cursor-not-allowed">
             View Settings →
-          </Link>
+          </span>
         </div>
       </div>
 
