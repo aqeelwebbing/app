@@ -1,6 +1,5 @@
 import "./styles.css";
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -18,7 +17,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geist.variable} ${geistMono.variable} ${geist.className} min-h-dvh bg-white text-slate-900 antialiased`}>
         {children}
         <Toaster />
-        <Analytics />
       </body>
     </html>
   );

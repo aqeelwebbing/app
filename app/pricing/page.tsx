@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { toast } from "sonner";
+import { getSupabaseClient } from "@/lib/supabase/client";
 
 const pricingTiers = [
   {
@@ -77,19 +78,24 @@ export default function PricingPage() {
     setLoading(true);
     setSelectedTier(tierId);
 
+    // Check authentication first to avoid 401 error
+    const supabase = getSupabaseClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      // Not authenticated, redirect to auth immediately
+      setLoading(false);
+      setSelectedTier(null);
+      router.push(`/auth?redirect=/pricing&plan=${tierId}`);
+      toast.error("Please sign in to continue");
+      return;
+    }
+
     const checkoutPromise = fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ plan: tierId }),
     }).then(async (response) => {
-      if (response.status === 401) {
-        // Not authenticated, redirect to auth
-        setLoading(false);
-        setSelectedTier(null);
-        router.push(`/auth?redirect=/pricing&plan=${tierId}`);
-        throw new Error("Please sign in to continue");
-      }
-
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || "Failed to process subscription");

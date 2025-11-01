@@ -35,7 +35,7 @@ export default function Home() {
       <section className="bg-gradient-to-b from-gray-50 to-white py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
-            Need a Lawyer's Voice{" "}
+            Need a Lawyer&apos;s Voice{" "}
             <span className="text-blue-500">Without the Legal Bill?</span>
           </h1>
 
@@ -219,17 +219,17 @@ export default function Home() {
               </h3>
               <p className="text-center mb-1">
                 <span className="text-green-600 font-semibold">You pay nothing for this request!</span>{" "}
-                <span className="text-gray-700">There's no charge and no obligation.</span>
+                <span className="text-gray-700">There&apos;s no charge and no obligation.</span>
               </p>
 
               <p className="text-sm text-gray-600 mb-6 text-center">
-                Let's see if we can help. Complete the form below to request a local law firm draft and deliver your letter.
-                We'll handle the rest.
+                Let&apos;s see if we can help. Complete the form below to request a local law firm draft and deliver your letter.
+                We&apos;ll handle the rest.
               </p>
 
               <div className="bg-orange-50 border-l-4 border-orange-500 p-4 mb-6">
                 <p className="text-sm text-gray-800">
-                  <span className="font-bold">* DISCLAIMER:</span> We receive 100's of requests. If you're serious and ready to
+                  <span className="font-bold">* DISCLAIMER:</span> We receive 100&apos;s of requests. If you&apos;re serious and ready to
                   move forward immediately, please complete the form below and pay very careful attention to the instructions
                   provided on the following page.
                 </p>
