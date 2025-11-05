@@ -1,0 +1,9 @@
+
+> talk-to-my-lawyer@0.1.0 build /workspaces/app
+> next build
+
+   ▲ Next.js 15.0.3
+
+   Creating an optimized production build ...
+ ⨯ Failed to find font override values for font `Geist`
+ ⨯ Failed to find font override values for font `Geist Mono`
