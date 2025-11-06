@@ -7,12 +7,24 @@ import { supabase } from "@/lib/supabase/client";
 interface DashboardHeaderProps {
   userName?: string | null;
   userEmail?: string | null;
+  userRole?: "user" | "employee" | "admin" | null;
 }
 
-export function DashboardHeader({ userName, userEmail }: DashboardHeaderProps) {
+export function DashboardHeader({ userName, userEmail, userRole }: DashboardHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
+
+  // Determine profile route based on user role
+  const getProfileRoute = () => {
+    if (userRole === "admin") {
+      return "/admin/profile";
+    } else if (userRole === "employee") {
+      return "/dashboard/employee/profile";
+    } else {
+      return "/dashboard/subscriber/profile";
+    }
+  };
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -75,7 +87,7 @@ export function DashboardHeader({ userName, userEmail }: DashboardHeaderProps) {
                     <button
                       onClick={() => {
                         setIsMenuOpen(false);
-                        router.push("/dashboard/subscriber/profile");
+                        router.push(getProfileRoute());
                       }}
                       className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
                     >

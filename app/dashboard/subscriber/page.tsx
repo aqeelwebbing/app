@@ -34,6 +34,7 @@ export default async function SubscriberDashboard() {
       <DashboardHeader
         userName={profile?.full_name}
         userEmail={profile?.email}
+        userRole="user"
       />
       <main className="mx-auto max-w-6xl p-6">
         <div className="mb-6">

@@ -1,6 +1,7 @@
 import { requireAdmin, getUserProfile } from "@/lib/auth";
 import { getServerSupabase } from "@/lib/supabase/server";
 import Link from "next/link";
+import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -27,7 +28,13 @@ export default async function AdminDashboard() {
   const activeCoupons = couponsResult.count || 0;
 
   return (
-    <main className="mx-auto max-w-6xl p-6">
+    <>
+      <DashboardHeader
+        userName={profile?.full_name}
+        userEmail={profile?.email}
+        userRole="admin"
+      />
+      <main className="mx-auto max-w-6xl p-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
         <p className="text-slate-600 mt-2">
@@ -179,5 +186,6 @@ export default async function AdminDashboard() {
         </div>
       </section>
     </main>
+    </>
   );
 }
