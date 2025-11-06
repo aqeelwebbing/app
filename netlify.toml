@@ -1,6 +1,6 @@
 # Netlify configuration for Next.js
 [build]
-  command = "pnpm build"
+  command = "pnpm install && pnpm build"
   publish = ".next"
 
 [[plugins]]
@@ -8,9 +8,4 @@
 
 [build.environment]
   NODE_VERSION = "20"
-
-# Redirect rules
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  NPM_FLAGS = "--legacy-peer-deps"
