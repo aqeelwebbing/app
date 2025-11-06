@@ -30,6 +30,7 @@ export default async function EmployeeDashboard() {
       <DashboardHeader
         userName={profile?.full_name}
         userEmail={profile?.email}
+        userRole="employee"
       />
       <main className="mx-auto max-w-6xl p-6">
         <div className="mb-6">

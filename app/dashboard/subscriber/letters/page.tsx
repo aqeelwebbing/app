@@ -35,6 +35,7 @@ export default async function MyLettersPage() {
       <DashboardHeader
         userName={profile?.full_name}
         userEmail={profile?.email}
+        userRole="user"
       />
       <main className="mx-auto max-w-7xl p-6">
         <div className="mb-6 flex items-center justify-between">
