@@ -1,183 +1,148 @@
-# Supabase CLI
+# Talk to My Lawyer
 
-[![Coverage Status](https://coveralls.io/repos/github/supabase/cli/badge.svg?branch=main)](https://coveralls.io/github/supabase/cli?branch=main) [![Bitbucket Pipelines](https://img.shields.io/bitbucket/pipelines/supabase-cli/setup-cli/master?style=flat-square&label=Bitbucket%20Canary)](https://bitbucket.org/supabase-cli/setup-cli/pipelines) [![Gitlab Pipeline Status](https://img.shields.io/gitlab/pipeline-status/sweatybridge%2Fsetup-cli?label=Gitlab%20Canary)
-](https://gitlab.com/sweatybridge/setup-cli/-/pipelines)
+A comprehensive legal document generation platform built with Next.js 15. Generate professional legal letters with customizable templates, role-based access control, and subscription management.
 
-[Supabase](https://supabase.io) is an open source Firebase alternative. We're building the features of Firebase using enterprise-grade open source tools.
+## Features
 
-This repository contains all the functionality for Supabase CLI.
+- **Professional Legal Letter Generation**: Create customized legal documents using pre-built templates
+- **Role-Based Access Control**: Admin, Employee, and Subscriber roles with specific permissions
+- **Subscription Management**: Flexible subscription tiers for different user needs
+- **PDF Export**: Export generated letters in professional PDF format
+- **Multi-User Platform**: Support for multiple users with different access levels
+- **Real-time Database**: Supabase PostgreSQL integration for reliable data management
+- **Responsive Design**: Beautiful UI with Tailwind CSS and custom animations
 
-- [x] Running Supabase locally
-- [x] Managing database migrations
-- [x] Creating and deploying Supabase Functions
-- [x] Generating types directly from your database schema
-- [x] Making authenticated HTTP requests to [Management API](https://supabase.com/docs/reference/api/introduction)
+## Tech Stack
 
-## Getting started
+- **Framework**: Next.js 15 with App Router
+- **Database**: Supabase (PostgreSQL with real-time features)
+- **Styling**: Tailwind CSS with custom animations
+- **UI Components**: Radix UI primitives with custom variants
+- **PDF Generation**: pdf-lib for creating legal documents
+- **Authentication**: Supabase Auth with role-based access
+- **Type Safety**: TypeScript with auto-generated database types
 
-### Install the CLI
+## Getting Started
 
-Available via [NPM](https://www.npmjs.com) as dev dependency. To install:
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Supabase account
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/aqeelwebbing/app.git
+cd app
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+Update the values with your Supabase credentials.
+
+4. Set up the database:
+```bash
+npm run db:push
+```
+
+### Development
+
+Start the development server:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Available Commands
 
 ```bash
-npm i supabase --save-dev
+# Development
+npm run dev              # Start development server (localhost:3000)
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Run ESLint
+npm run typecheck        # Run TypeScript type checking
+
+# Database
+npm run db:push          # Push schema changes to Supabase
+npm run db:gen-types     # Generate TypeScript types from database schema
 ```
 
-To install the beta release channel:
-
-```bash
-npm i supabase@beta --save-dev
-```
-
-When installing with yarn 4, you need to disable experimental fetch with the following nodejs config.
+## Project Structure
 
 ```
-NODE_OPTIONS=--no-experimental-fetch yarn add supabase
+app/
+├── app/                  # Next.js app router pages and API routes
+├── components/           # Reusable UI components
+├── hooks/               # Custom React hooks
+├── lib/                 # Shared utilities and helpers
+├── supabase/            # Database configuration and migrations
+└── public/              # Static assets
 ```
 
-> **Note**
-For Bun versions below v1.0.17, you must add `supabase` as a [trusted dependency](https://bun.sh/guides/install/trusted) before running `bun add -D supabase`.
+## Database Schema
 
-<details>
-  <summary><b>macOS</b></summary>
+### Core Tables
 
-  Available via [Homebrew](https://brew.sh). To install:
+- **profiles**: User profile information and settings
+- **user_roles**: Role assignments (user/employee/admin)
+- **subscriptions**: User subscription management
+- **letters**: Generated legal letters and documents
+- **commissions**: Employee referral tracking
 
-  ```sh
-  brew install supabase/tap/supabase
-  ```
+## User Roles
 
-  To install the beta release channel:
-  
-  ```sh
-  brew install supabase/tap/supabase-beta
-  brew link --overwrite supabase-beta
-  ```
-  
-  To upgrade:
+### Subscriber
+- Generate legal letters within subscription limits
+- Access personal dashboard
+- Download generated letters as PDF
 
-  ```sh
-  brew upgrade supabase
-  ```
-</details>
+### Employee
+- Manage subscriber accounts
+- Track generated letters
+- Earn commissions from subscriber activity
 
-<details>
-  <summary><b>Windows</b></summary>
+### Admin
+- Full system access
+- Manage all users and subscriptions
+- Monitor platform activity
 
-  Available via [Scoop](https://scoop.sh). To install:
+## Development Workflow
 
-  ```powershell
-  scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
-  scoop install supabase
-  ```
+### Adding New Features
 
-  To upgrade:
+1. Create a feature branch
+2. Make your changes
+3. Push schema changes to database if needed
+4. Test thoroughly
+5. Submit a pull request
 
-  ```powershell
-  scoop update supabase
-  ```
-</details>
+### Database Changes
 
-<details>
-  <summary><b>Linux</b></summary>
+When modifying the database schema:
 
-  Available via [Homebrew](https://brew.sh) and Linux packages.
+1. Update the Supabase migrations
+2. Run `npm run db:push` to apply changes
+3. Run `npm run db:gen-types` to update TypeScript types
+4. Commit both migration files and generated types
 
-  #### via Homebrew
+## Contributing
 
-  To install:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-  ```sh
-  brew install supabase/tap/supabase
-  ```
+## License
 
-  To upgrade:
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-  ```sh
-  brew upgrade supabase
-  ```
+## Support
 
-  #### via Linux packages
-
-  Linux packages are provided in [Releases](https://github.com/supabase/cli/releases). To install, download the `.apk`/`.deb`/`.rpm`/`.pkg.tar.zst` file depending on your package manager and run the respective commands.
-
-  ```sh
-  sudo apk add --allow-untrusted <...>.apk
-  ```
-
-  ```sh
-  sudo dpkg -i <...>.deb
-  ```
-
-  ```sh
-  sudo rpm -i <...>.rpm
-  ```
-
-  ```sh
-  sudo pacman -U <...>.pkg.tar.zst
-  ```
-</details>
-
-<details>
-  <summary><b>Other Platforms</b></summary>
-
-  You can also install the CLI via [go modules](https://go.dev/ref/mod#go-install) without the help of package managers.
-
-  ```sh
-  go install github.com/supabase/cli@latest
-  ```
-
-  Add a symlink to the binary in `$PATH` for easier access:
-
-  ```sh
-  ln -s "$(go env GOPATH)/bin/cli" /usr/bin/supabase
-  ```
-
-  This works on other non-standard Linux distros.
-</details>
-
-<details>
-  <summary><b>Community Maintained Packages</b></summary>
-
-  Available via [pkgx](https://pkgx.sh/). Package script [here](https://github.com/pkgxdev/pantry/blob/main/projects/supabase.com/cli/package.yml).
-  To install in your working directory:
-
-  ```bash
-  pkgx install supabase
-  ```
-
-  Available via [Nixpkgs](https://nixos.org/). Package script [here](https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/supabase-cli/default.nix).
-</details>
-
-### Run the CLI
-
-```bash
-supabase bootstrap
-```
-
-Or using npx:
-
-```bash
-npx supabase bootstrap
-```
-
-The bootstrap command will guide you through the process of setting up a Supabase project using one of the [starter](https://github.com/supabase-community/supabase-samples/blob/main/samples.json) templates.
-
-## Docs
-
-Command & config reference can be found [here](https://supabase.com/docs/reference/cli/about).
-
-## Breaking changes
-
-We follow semantic versioning for changes that directly impact CLI commands, flags, and configurations.
-
-However, due to dependencies on other service images, we cannot guarantee that schema migrations, seed.sql, and generated types will always work for the same CLI major version. If you need such guarantees, we encourage you to pin a specific version of CLI in package.json.
-
-## Developing
-
-To run from source:
-
-```sh
-# Go >= 1.22
-go run . help
-```
+For support, please open an issue on GitHub or contact the development team.
