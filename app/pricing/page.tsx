@@ -12,60 +12,58 @@ const pricingTiers = [
   {
     id: "one-time",
     name: "One-Time Letter",
-    price: 199,
-    priceLabel: "$199",
+    price: 50,
+    priceLabel: "$50",
     description: "Perfect for a single legal matter",
     features: [
       "1 Professional Legal Letter",
-      "AI-Powered Generation",
+      "Custom-Drafted by Licensed Attorneys",
       "PDF Download",
-      "Email to Attorney",
-      "Valid for 30 Days",
-      "No Recurring Charges"
+      "Email Delivery",
+      "Professional Letterhead",
+      "24-48 Hour Delivery"
     ],
     highlighted: false,
     cta: "Get Started"
   },
   {
-    id: "annual-basic",
-    name: "Annual Basic",
-    price: 2388,
-    priceLabel: "$2,388/year",
-    priceSubtext: "($199/month)",
-    description: "For ongoing legal needs",
+    id: "monthly",
+    name: "Monthly Membership",
+    price: 200,
+    priceLabel: "$200/month",
+    description: "Best value for regular needs",
     features: [
       "4 Letters Per Month",
-      "48 Letters Per Year",
-      "AI-Powered Generation",
+      "Custom-Drafted by Licensed Attorneys",
       "PDF Downloads",
-      "Email to Attorneys",
+      "Email Delivery",
+      "Professional Letterhead",
+      "24-48 Hour Delivery",
       "Priority Support",
-      "Monthly Refills",
       "Cancel Anytime"
     ],
     highlighted: true,
     cta: "Most Popular"
   },
   {
-    id: "annual-premium",
-    name: "Annual Premium",
-    price: 7200,
-    priceLabel: "$7,200/year",
-    priceSubtext: "($600/month)",
-    description: "For businesses and heavy users",
+    id: "annual",
+    name: "Annual Plan",
+    price: 1999,
+    priceLabel: "$1,999/year",
+    priceSubtext: "(Save $400 vs monthly)",
+    description: "Maximum savings for businesses",
     features: [
-      "8 Letters Per Month",
-      "96 Letters Per Year",
-      "AI-Powered Generation",
+      "4 Letters Per Month (48 Total)",
+      "Custom-Drafted by Licensed Attorneys",
       "PDF Downloads",
-      "Email to Attorneys",
+      "Email Delivery",
+      "Professional Letterhead",
+      "24-48 Hour Delivery",
       "VIP Priority Support",
-      "Monthly Refills",
-      "Dedicated Account Manager",
       "Cancel Anytime"
     ],
     highlighted: false,
-    cta: "Go Premium"
+    cta: "Best Value"
   }
 ];
 
@@ -145,7 +143,7 @@ export default function PricingPage() {
             Choose Your Plan
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-2">
-            Professional AI-generated legal letters delivered instantly.
+            Professional attorney-drafted legal letters delivered in 24-48 hours.
           </p>
           <p className="text-sm text-slate-500 max-w-2xl mx-auto">
             All plans include PDF downloads and attorney email delivery.

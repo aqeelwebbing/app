@@ -24,7 +24,7 @@ export default function Home() {
             <Link href="#how-it-works" className="text-sm text-gray-700 hover:text-blue-600 transition-colors">
               How It Works
             </Link>
-            <Link href="/auth" className="text-sm text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/auth?mode=signup" className="text-sm text-gray-700 hover:text-blue-600 transition-colors">
               Get Started
             </Link>
           </div>
@@ -50,7 +50,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <button
-              onClick={() => router.push("/auth")}
+              onClick={() => router.push("/auth?mode=signup")}
               className="px-8 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@ export default function Home() {
               <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span className="text-gray-700 font-medium">No Fees</span>
+              <span className="text-gray-700 font-medium">Affordable</span>
             </div>
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,25 +93,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Professional Importance Section */}
+      <section className="bg-red-50 border-y border-red-200 py-12 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center mb-4">
+            <svg className="w-8 h-8 text-red-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <h2 className="text-2xl font-bold text-red-800">Important Notice</h2>
+          </div>
+          <p className="text-lg text-red-700 font-medium mb-4">
+            Self-drafted or AI-generated letters are <strong>not effective</strong> and are often ignored by recipients.
+          </p>
+          <p className="text-gray-700 mb-6">
+            Legal letters must be on professional lawyer letterhead to be taken seriously. All our letters are
+            <strong> custom-drafted by licensed attorneys</strong> and delivered on official law firm letterhead
+            for maximum impact and credibility.
+          </p>
+          <div className="bg-white rounded-lg border border-red-200 p-6 shadow-sm">
+            <div className="flex items-center justify-center mb-3">
+              <svg className="w-6 h-6 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="text-green-700 font-semibold">Professional Solution</span>
+            </div>
+            <p className="text-gray-700">
+              <strong>Choose professional legal representation</strong> to ensure your letter gets the attention it deserves and achieves the results you need.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section */}
       <section className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 py-12 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
-            <div className="text-4xl md:text-5xl font-bold text-white mb-2">10,000+</div>
+            <div className="text-4xl md:text-5xl font-bold text-white mb-2">1,000+</div>
             <div className="text-blue-200 text-sm md:text-base">Letters Delivered</div>
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold text-white mb-2">95%</div>
-            <div className="text-blue-200 text-sm md:text-base">Success Rate</div>
+            <div className="text-blue-200 text-sm md:text-base">Attorney Reviewed</div>
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold text-white mb-2">50+</div>
             <div className="text-blue-200 text-sm md:text-base">Licensed Attorneys</div>
           </div>
           <div>
-            <div className="text-4xl md:text-5xl font-bold text-white mb-2">24 Hours</div>
-            <div className="text-blue-200 text-sm md:text-base">Average Delivery</div>
+            <div className="text-4xl md:text-5xl font-bold text-white mb-2">24-48</div>
+            <div className="text-blue-200 text-sm md:text-base">Hour Delivery</div>
           </div>
+        </div>
+        <div className="text-center mt-8">
+          <p className="text-blue-200 text-sm">
+            <em>*Statistics based on verified service delivery data. Individual results may vary.</em>
+          </p>
         </div>
       </section>
 
@@ -186,7 +222,7 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-blue-600">Starting at {letterType.price}</span>
                   <button
-                    onClick={() => router.push("/auth")}
+                    onClick={() => router.push("/auth?mode=signup")}
                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors inline-flex items-center gap-1"
                   >
                     Select This Type
@@ -218,8 +254,8 @@ export default function Home() {
                 Request Service Now
               </h3>
               <p className="text-center mb-1">
-                <span className="text-green-600 font-semibold">You pay nothing for this request!</span>{" "}
-                <span className="text-gray-700">There&apos;s no charge and no obligation.</span>
+                <span className="text-green-600 font-semibold">Affordable legal services!</span>{" "}
+                <span className="text-gray-700">Professional letters starting at just $50.</span>
               </p>
 
               <p className="text-sm text-gray-600 mb-6 text-center">
@@ -236,7 +272,7 @@ export default function Home() {
               </div>
 
               <button
-                onClick={() => router.push("/auth")}
+                onClick={() => router.push("/auth?mode=signup")}
                 className="w-full px-6 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -254,13 +290,13 @@ export default function Home() {
                   Login
                 </button>
                 <button
-                  onClick={() => router.push("/auth")}
+                  onClick={() => router.push("/auth?mode=signup")}
                   className="pb-3 px-4 text-gray-500 hover:text-gray-700"
                 >
                   Register
                 </button>
                 <button
-                  onClick={() => router.push("/auth")}
+                  onClick={() => router.push("/auth?mode=signup")}
                   className="pb-3 px-4 text-gray-500 hover:text-gray-700"
                 >
                   Register with Coupon

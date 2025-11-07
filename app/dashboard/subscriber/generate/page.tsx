@@ -125,7 +125,7 @@ export default function GenerateLetterPage() {
         <Card className="p-8">
           <h1 className="text-3xl font-bold mb-2">Generate Legal Letter</h1>
           <p className="text-gray-600 mb-8">
-            Fill out the details below and our AI will generate a professional legal letter for you.
+            Fill out the details below and our licensed attorneys will draft a professional legal letter for you.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
