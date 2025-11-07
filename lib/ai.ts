@@ -2,6 +2,7 @@
 
 interface GenerateLetterOptions {
   title: string;
+  subject?: string;
   content: string;
   recipientName?: string;
   recipientAddress?: string;
@@ -15,7 +16,7 @@ interface GenerateLetterOptions {
 export async function generateLetterWithAI(
   options: GenerateLetterOptions
 ): Promise<string> {
-  const { title, content, recipientName, recipientAddress } = options;
+  const { title, subject, content, recipientName, recipientAddress } = options;
 
   const apiKey = process.env.GEMINI_API_KEY;
   const model = process.env.NEXT_PUBLIC_GEMINI_MODEL || "gemini-1.5-pro";
@@ -84,11 +85,12 @@ export async function generateLetterWithAI(
  * Build a detailed prompt for the AI to generate a professional legal letter
  */
 function buildLetterPrompt(options: GenerateLetterOptions): string {
-  const { title, content, recipientName, recipientAddress } = options;
+  const { title, subject, content, recipientName, recipientAddress } = options;
 
   return `You are a professional legal letter writing assistant. Generate a formal, professional legal letter based on the following information:
 
 LETTER TITLE: ${title}
+${subject ? `LETTER CATEGORY: ${subject}` : ""}
 
 USER REQUEST/CONTENT:
 ${content}
@@ -115,7 +117,7 @@ Generate ONLY the letter content. Do not include any explanatory text before or 
  * Fallback formatting when AI is not available
  */
 function formatLetterWithoutAI(options: GenerateLetterOptions): string {
-  const { title, content, recipientName, recipientAddress } = options;
+  const { title, subject, content, recipientName, recipientAddress } = options;
   const date = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

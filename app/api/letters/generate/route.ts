@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json();
-    const { title, content, recipient_name, recipient_address } = body;
+    const { title, subject, content, recipient_name, recipient_address } = body;
 
     if (!title || !content) {
       return NextResponse.json(
@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       .insert({
         user_id: user.id,
         title,
+        subject: subject || null,
         content,
         recipient_name: recipient_name || null,
         recipient_address: recipient_address || null,
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
     try {
       generatedContent = await generateLetterWithAI({
         title,
+        subject,
         content,
         recipientName: recipient_name,
         recipientAddress: recipient_address,
