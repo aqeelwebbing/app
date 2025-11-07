@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate letter using Gemini AI
+    // Generate letter draft using current system
     let generatedContent: string;
     try {
       generatedContent = await generateLetterWithAI({
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         recipientAddress: recipient_address,
       });
     } catch (aiError) {
-      console.error("AI generation error:", aiError);
+      console.error("Letter generation error:", aiError);
       // Update letter status to failed
       await supabase
         .from("letters")
@@ -77,13 +77,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Update letter status to completed
+    // Update letter status to pending_approval for lawyer review
     const { error: updateError } = await supabase
       .from("letters")
       .update({
-        status: "completed",
+        status: "pending_approval",
         content: generatedContent,
-        completed_at: new Date().toISOString(),
       })
       .eq("id", letter.id);
 
@@ -94,7 +93,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       letterId: letter.id,
-      message: "Letter generated successfully",
+      message: "Letter draft submitted for attorney review",
     });
   } catch (error) {
     console.error("Error generating letter:", error);

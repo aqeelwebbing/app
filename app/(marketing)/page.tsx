@@ -155,14 +155,15 @@ export default function Home() {
       <section id="letter-types" className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-4">
-            <span className="text-sm text-blue-600 font-semibold">Professional Service</span>
+            <span className="text-sm text-blue-600 font-semibold">Professional Legal Service</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-            Professional Legal Letters
+            Attorney-Drafted Legal Letters
           </h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Choose from our comprehensive library of lawyer-drafted letter templates. Each letter is customized
-            for your specific situation and reviewed by licensed attorneys.
+            Choose from our comprehensive library of attorney-reviewed letter types. Each letter is
+            custom-drafted by licensed attorneys and delivered on professional law firm letterhead
+            for maximum impact and credibility.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -171,43 +172,43 @@ export default function Home() {
                 icon: "🏠",
                 title: "Tenant Disputes",
                 description: "Security deposits, lease violations, habitability issues, and more.",
-                price: "$49",
+                price: "$50",
               },
               {
                 icon: "💼",
                 title: "HR & Employment",
                 description: "Workplace issues, wrongful termination, wage disputes, and more.",
-                price: "$99",
+                price: "$50",
               },
               {
                 icon: "📈",
                 title: "Debt Collection",
                 description: "Business recovery from clients, customers, or vendors.",
-                price: "$39",
+                price: "$50",
               },
               {
                 icon: "👤",
                 title: "Personal Disputes",
                 description: "Neighbor disputes, contract breaches, personal injury claims.",
-                price: "$45",
+                price: "$50",
               },
               {
                 icon: "🏢",
                 title: "Property Issues",
                 description: "Property damage, boundary disputes, easement issues.",
-                price: "$55",
+                price: "$50",
               },
               {
                 icon: "⏰",
                 title: "Cease & Desist",
                 description: "Harassment, defamation, copyright infringement, and more.",
-                price: "$65",
+                price: "$50",
               },
               {
                 icon: "⚖️",
                 title: "Settlement Discussion",
                 description: "Negotiation support, dispute resolution, and agreement proposals.",
-                price: "$75",
+                price: "$50",
               },
             ].map((letterType, idx) => (
               <div
@@ -220,7 +221,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{letterType.title}</h3>
                 <p className="text-gray-600 text-sm mb-4">{letterType.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-blue-600">Starting at {letterType.price}</span>
+                  <span className="text-lg font-bold text-blue-600">{letterType.price}</span>
                   <button
                     onClick={() => router.push("/auth?mode=signup")}
                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors inline-flex items-center gap-1"
