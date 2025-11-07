@@ -23,18 +23,11 @@ This document provides a step-by-step guide and clear action points based on the
 
 ### 3. Service Delivery & Review Process
 - Set average letter delivery window to **24–48 hours**; mention the 24-hour delivery average on-site.
-- Implement/admin update:# Legal Letter Service - Team Meeting Summary
-
-- Service will focus on professionally drafted legal letters, each reviewed and approved by licensed attorneys before delivery.
-- Website messaging will be updated for clarity: "no fees" changed to "affordable", and all AI references removed.
-- Pricing updates: $50 per letter, $200/month for 4 letters, $1999/year with savings for annual subscribers.
-- The site will feature clear statements discouraging DIY or AI-generated letters, emphasizing professional lawyer letterhead for credibility.
-- Admin dashboard will allow lawyers/paralegals to filter and approve all letters prior to client delivery.
-- All public-facing content will be reviewed for accuracy, professionalism, and compliance.
-
-*Source: Team Meeting, Nov 4, 2025 — summary extracted from [web:1].*
-  - Build an **admin area** where lawyers or paralegals can filter, review, and approve all letters before they are sent to clients.
-  - Letters should only be delivered to clients after lawyer/paralegal approval.
+- Implement a streamlined letter review workflow within the **admin dashboard**:
+  - All generated letters must go through an additional **legal review step** before client delivery.
+  - Lawyers/paralegals can review, edit, and approve letters directly in the admin dashboard.
+  - Once approved in the admin dashboard, the letter will automatically be posted to the subscriber's **My Letters** area.
+  - Letters remain pending until lawyer/paralegal approval is completed.
 - Emphasize the importance of review and lawyer vetting at each step.
 
 ### 4. Professionalism & Compliance
@@ -56,5 +49,3 @@ This document provides a step-by-step guide and clear action points based on the
 "Update the website and business process based on the above action plan. Ensure every step is documented, deployed, and reviewed by all relevant stakeholders, especially focusing on legal compliance and professional standards."
 
 ---
-
-*Source: Team Meeting, Nov 4, 2025 — conversation summary and action items compiled from [web:1].*
