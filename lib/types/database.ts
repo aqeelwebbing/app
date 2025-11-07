@@ -12,7 +12,7 @@ export type UserRole = "user" | "employee" | "admin";
 
 export type SubscriptionStatus = "active" | "canceled" | "expired";
 
-export type LetterStatus = "draft" | "generating" | "completed" | "failed";
+export type LetterStatus = "draft" | "generating" | "pending_approval" | "approved" | "rejected" | "completed" | "failed";
 
 export type CommissionStatus = "pending" | "paid" | "cancelled";
 

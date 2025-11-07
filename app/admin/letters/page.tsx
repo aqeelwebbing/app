@@ -58,6 +58,53 @@ export default function AdminLettersPage() {
     void loadLetters();
   }, [loadLetters]);
 
+  const approveLetter = async (letterId: string) => {
+    if (!confirm("Are you sure you want to approve this letter for delivery?")) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("letters")
+        .update({
+          status: "approved",
+          completed_at: new Date().toISOString()
+        })
+        .eq("id", letterId);
+
+      if (error) throw error;
+
+      alert("Letter approved successfully and marked for delivery");
+      await loadLetters();
+    } catch (error: any) {
+      console.error("Error approving letter:", error);
+      alert(error.message || "Failed to approve letter");
+    }
+  };
+
+  const rejectLetter = async (letterId: string) => {
+    const reason = prompt("Please provide a reason for rejection:");
+    if (!reason) return;
+
+    try {
+      const { error } = await supabase
+        .from("letters")
+        .update({
+          status: "rejected",
+          notes: reason
+        })
+        .eq("id", letterId);
+
+      if (error) throw error;
+
+      alert("Letter rejected successfully");
+      await loadLetters();
+    } catch (error: any) {
+      console.error("Error rejecting letter:", error);
+      alert(error.message || "Failed to reject letter");
+    }
+  };
+
   const deleteLetter = async (letterId: string) => {
     if (!confirm("Are you sure you want to delete this letter?")) {
       return;
@@ -79,6 +126,48 @@ export default function AdminLettersPage() {
     }
   };
 
+  const getStatusBadge = (status: string) => {
+    const statusConfig = {
+      pending_approval: {
+        label: "Pending Review",
+        class: "bg-yellow-100 text-yellow-800"
+      },
+      approved: {
+        label: "Approved",
+        class: "bg-green-100 text-green-800"
+      },
+      rejected: {
+        label: "Rejected",
+        class: "bg-red-100 text-red-800"
+      },
+      generating: {
+        label: "Generating",
+        class: "bg-blue-100 text-blue-800"
+      },
+      completed: {
+        label: "Completed",
+        class: "bg-green-100 text-green-800"
+      },
+      failed: {
+        label: "Failed",
+        class: "bg-red-100 text-red-800"
+      }
+    };
+
+    const config = statusConfig[status as keyof typeof statusConfig] || {
+      label: status,
+      class: "bg-gray-100 text-gray-800"
+    };
+
+    return (
+      <span
+        className={`px-3 py-1 rounded-full text-xs font-medium ${config.class}`}
+      >
+        {config.label}
+      </span>
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -92,8 +181,8 @@ export default function AdminLettersPage() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">Letter Management</h1>
-            <p className="text-gray-600 mt-1">View and manage all system letters</p>
+            <h1 className="text-3xl font-bold">Letter Review & Approval</h1>
+            <p className="text-gray-600 mt-1">Review, approve, and manage client letters before delivery</p>
           </div>
           <Button variant="outline" onClick={() => router.push("/admin")}>
             Back to Dashboard
@@ -135,18 +224,30 @@ export default function AdminLettersPage() {
                       )}
                     </div>
                     <div className="flex items-center gap-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          letter.status === "completed"
-                            ? "bg-green-100 text-green-800"
-                            : letter.status === "generating"
-                            ? "bg-blue-100 text-blue-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {letter.status}
-                      </span>
-                      {letter.status === "completed" && (
+                      {getStatusBadge(letter.status)}
+
+                      {/* Approval Actions */}
+                      {letter.status === "pending_approval" && (
+                        <>
+                          <Button
+                            size="sm"
+                            onClick={() => approveLetter(letter.id)}
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => rejectLetter(letter.id)}
+                          >
+                            Reject
+                          </Button>
+                        </>
+                      )}
+
+                      {/* Completed Letters */}
+                      {(letter.status === "approved" || letter.status === "completed") && (
                         <Button
                           size="sm"
                           variant="outline"
@@ -157,13 +258,17 @@ export default function AdminLettersPage() {
                           Download PDF
                         </Button>
                       )}
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => deleteLetter(letter.id)}
-                      >
-                        Delete
-                      </Button>
+
+                      {/* Delete for all statuses except approved */}
+                      {letter.status !== "approved" && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => deleteLetter(letter.id)}
+                        >
+                          Delete
+                        </Button>
+                      )}
                     </div>
                   </div>
                   {letter.content && (

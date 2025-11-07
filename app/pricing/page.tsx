@@ -128,8 +128,8 @@ export default function PricingPage() {
               Talk To My Lawyer
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/auth">
-                <Button variant="outline">Sign In</Button>
+              <Link href="/auth?mode=signup">
+                <Button variant="outline">Get Started</Button>
               </Link>
             </div>
           </div>
@@ -262,12 +262,12 @@ export default function PricingPage() {
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold text-slate-900 mb-2">
-                How does the AI letter generation work?
+                How does the attorney letter drafting process work?
               </h3>
               <p className="text-slate-600">
-                Our AI analyzes your situation and generates a professional legal letter
+                Our licensed attorneys review your situation and draft a professional legal letter
                 tailored to your specific needs. Simply provide the details, and we&apos;ll
-                create a letter ready to send to attorneys or other parties.
+                create a letter on official law firm letterhead ready to send to the recipient.
               </p>
             </div>
             <div>
